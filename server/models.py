@@ -1,19 +1,12 @@
-from extensions import db
+from app import db
+from flask_login import UserMixin
 
 
-# JournalEntry model
-class JournalEntry(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    category = db.Column(db.String(50))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-
-# User model
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    image_file = db.Column(db.String(100), nullable=False, default='default.jpg')
 
 
