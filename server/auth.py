@@ -5,10 +5,14 @@ from functools import wraps
 from flask import current_app as app
 
 
+
 auth = Blueprint('auth', __name__)
 
 
 ########################################################################################### Creates JWT token ###########################################################################################
+
+
+
 def token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
@@ -28,6 +32,9 @@ def token_required(func):
 
 
 ###################################################################################################### (Testing)  ###########################################################################################
+
+
+
 @auth.route('/public')
 def public():
     return 'This is for the public'
@@ -35,6 +42,9 @@ def public():
 
 
 ########################################################################################### (Testing) Tests the authenticity of the jwt code ###########################################################################################
+
+
+
 @token_required
 def auth_route():
     return 'JWT is verified. Welcome to your dashboard!'
@@ -42,6 +52,9 @@ def auth_route():
 
 
 ########################################################################################### Home route ###########################################################################################
+
+
+
 @auth.route('/')
 def home():
     if not session.get('logged_in'):
@@ -52,6 +65,9 @@ def home():
 
 
 ########################################################################################### Login route ###########################################################################################
+
+
+
 @auth.route('/login', methods=['POST'])
 def login():
     if request.form['username'] == 'Ronnie' and request.form['password']:
